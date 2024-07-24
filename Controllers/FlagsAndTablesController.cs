@@ -97,7 +97,7 @@ namespace SupportAuxiliary.Controllers
         }
         private async Task<FlagsTables> GetListsOfFlagsAndTables(Programs program, string product)
         {
-            string projectName = "Retail360.IL";
+            string projectName = "ProjectName";
             string[] FileContent;
             try
             {
@@ -181,8 +181,8 @@ namespace SupportAuxiliary.Controllers
 
         private async Task<List<Programs>> GetAllPrograms(ProgramType programType)
         {
-            string projectName = "Retail360.IL";
-            string AllProgramsPath = $"$/ProjectName/Dev/{programType.ToString()}/Retail360.IL.{programType.ToString()}.App/ApplicationPrograms.cs";
+            string projectName = "ProjectName";
+            string AllProgramsPath = $"$/ProjectName/Dev/{programType.ToString()}/ProjectName.{programType.ToString()}.App/ApplicationPrograms.cs";
             string fileName = projectName.Split('/').LastOrDefault() + ".cs";
             string[] allLines = await GetItemFromTFS(tfvcClient, projectName, AllProgramsPath, fileName);
             return CreateList(allLines, programType);
@@ -225,7 +225,7 @@ namespace SupportAuxiliary.Controllers
                             .Replace(")","")
                             .Split('.')[values[3].Split('.').Length - 1] + "Core.cs";
                         string _programPath = $"$/ProjectName/Dev/{programType.ToString()}/"+ 
-                            $"Retail360.IL.{programType.ToString()}." + 
+                            $"ProjectName.{programType.ToString()}." + 
                             values[3].Replace("typeof(", "")
                             .Replace(")","")
                             .Replace("( => ","")
@@ -290,7 +290,7 @@ namespace SupportAuxiliary.Controllers
 
         private async Task<TfvcHttpClient> ConnectToTFS()
         {
-            string tfsUrl = "http://TfsAddress/tfs/retail360";
+            string tfsUrl = "http://TfsAddress/tfs/ProjectName";
             string pat = "PAT-SecretKey";
             // Optionally, credentials if needed
             VssConnection connection = new VssConnection(new Uri(tfsUrl), new VssAadCredential(string.Empty, pat));
