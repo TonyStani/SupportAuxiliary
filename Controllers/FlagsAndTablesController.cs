@@ -182,7 +182,7 @@ namespace SupportAuxiliary.Controllers
         private async Task<List<Programs>> GetAllPrograms(ProgramType programType)
         {
             string projectName = "Retail360.IL";
-            string AllProgramsPath = $"$/Retail360.IL/Dev/{programType.ToString()}/Retail360.IL.{programType.ToString()}.App/ApplicationPrograms.cs";
+            string AllProgramsPath = $"$/ProjectName/Dev/{programType.ToString()}/Retail360.IL.{programType.ToString()}.App/ApplicationPrograms.cs";
             string fileName = projectName.Split('/').LastOrDefault() + ".cs";
             string[] allLines = await GetItemFromTFS(tfvcClient, projectName, AllProgramsPath, fileName);
             return CreateList(allLines, programType);
@@ -209,7 +209,7 @@ namespace SupportAuxiliary.Controllers
                     if (values.Length > 4)
                     {
                         string _programName = values[4].Replace(")","").Split('.')[values[4].Split('.').Length - 1] + "Core.cs";
-                        string _programPath = $"$/Retail360.IL/Dev/{programType.ToString()}/" + values[3]+"/"+ _programName;
+                        string _programPath = $"$/ProjectName/Dev/{programType.ToString()}/" + values[3]+"/"+ _programName;
                         Programs program = new Programs
                         {
                             ProgramNumber = int.Parse(values[0].Trim()),
@@ -224,7 +224,7 @@ namespace SupportAuxiliary.Controllers
                         string _programName = values[3]
                             .Replace(")","")
                             .Split('.')[values[3].Split('.').Length - 1] + "Core.cs";
-                        string _programPath = $"$/Retail360.IL/Dev/{programType.ToString()}/"+ 
+                        string _programPath = $"$/ProjectName/Dev/{programType.ToString()}/"+ 
                             $"Retail360.IL.{programType.ToString()}." + 
                             values[3].Replace("typeof(", "")
                             .Replace(")","")
@@ -290,8 +290,8 @@ namespace SupportAuxiliary.Controllers
 
         private async Task<TfvcHttpClient> ConnectToTFS()
         {
-            string tfsUrl = "http://tlvwvtfsproxy2:8080/tfs/retail360";
-            string pat = "j23vtm2xzslyw3edx7tcdnpqexjiyggep2kxygssvye4svi6z3na";
+            string tfsUrl = "http://TfsAddress/tfs/retail360";
+            string pat = "PAT-SecretKey";
             // Optionally, credentials if needed
             VssConnection connection = new VssConnection(new Uri(tfsUrl), new VssAadCredential(string.Empty, pat));
             // Get the TFVC version control client
@@ -302,7 +302,7 @@ namespace SupportAuxiliary.Controllers
         {
             try
             {
-                var allProgramsItem = await tfvcClient.GetItemsAsync(scopePath: "$/Retail360.IL/Dev/HeadOffice/"+fileName, recursionLevel: Microsoft.TeamFoundation.SourceControl.WebApi.VersionControlRecursionType.Full);
+                var allProgramsItem = await tfvcClient.GetItemsAsync(scopePath: "$/ProjectName/Dev/Product/"+fileName, recursionLevel: Microsoft.TeamFoundation.SourceControl.WebApi.VersionControlRecursionType.Full);
                 foreach (var item in allProgramsItem)
                 {
                     if (item.Path.EndsWith(fileName, StringComparison.OrdinalIgnoreCase))
@@ -320,8 +320,8 @@ namespace SupportAuxiliary.Controllers
 
         private async Task<List<Tables>> GerAllTables(ProgramType programType)
         {
-            string projectName = "Retail360.IL";
-            string AllTablesPath = $"$/Retail360.IL/Dev/{programType.ToString()}/Retail360.IL.{programType.ToString()}.App/ApplicationEntities.cs";
+            string projectName = "ProjectName";
+            string AllTablesPath = $"$/ProjectName/Dev/{programType.ToString()}/ProjectName.{programType.ToString()}.App/ApplicationEntities.cs";
             string fileName = projectName.Split('/').LastOrDefault() + ".cs";
             string[] allLines = await GetItemFromTFS(tfvcClient, projectName, AllTablesPath, fileName);
             return CreateTableList(allLines, programType);
